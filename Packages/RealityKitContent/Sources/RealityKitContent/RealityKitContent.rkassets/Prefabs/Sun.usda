@@ -1,0 +1,438 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (448.100.11)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+reorder rootPrims = ["Root", "Parent"]
+
+def Xform "Root"
+{
+    reorder nameChildren = ["Pivot", "Model_Sorting_Group", "Sun_Ray_1"]
+    def Xform "Pivot" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, 0, 0)
+        }
+    )
+    {
+        reorder nameChildren = ["Sun", "DirectionalLight", "Face"]
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Sphere "Sun" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            reorder nameChildren = ["SunMaterial", "MeshSorting", "Sun_Ray_1", "Sun_Ray_2", "Sun_Ray_3", "Sun_Ray_4", "Billboard", "Sun_Ray_5", "Sun_Ray_6", "Sun_Ray_7", "Sun_Ray_8", "Face"]
+            rel material:binding = </Root/Pivot/Sun/SunMaterial>
+            double radius = 0.1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Material "SunMaterial"
+            {
+                token outputs:mtlx:surface.connect = </Root/Pivot/Sun/SunMaterial/UnlitSurface.outputs:out>
+                token outputs:realitykit:vertex
+                token outputs:surface.connect = </Root/Pivot/Sun/SunMaterial/DefaultSurfaceShader.outputs:surface>
+                float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (0, 110.5)
+
+                def Shader "DefaultSurfaceShader" (
+                    active = false
+                )
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor = (1, 0.8736751, 0.0009634633) (
+                        colorSpace = "srgb_displayp3"
+                    )
+                    float inputs:roughness = 0.75
+                    token outputs:surface
+                }
+
+                def Shader "UnlitSurface"
+                {
+                    uniform token info:id = "ND_realitykit_unlit_surfaceshader"
+                    bool inputs:applyPostProcessToneMap = 0
+                    color3f inputs:color = (1, 0.93971086, 0.31640735) (
+                        colorSpace = "srgb_displayp3"
+                    )
+                    bool inputs:hasPremultipliedAlpha
+                    float inputs:opacity = 0.3
+                    token outputs:out
+                    float2 ui:nodegraph:node:pos = (-307.61282, 130.21555)
+                    int ui:nodegraph:node:stackingOrder = 27
+                }
+            }
+
+            def RealityKitComponent "MeshSorting"
+            {
+                rel group = </Root/Model_Sorting_Group>
+                uniform token info:id = "RealityKit.MeshSorting"
+                int priorityInGroup = 1
+            }
+
+            def Cone "Sun_Ray_1" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 0)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.15
+                rel material:binding = </Root/Pivot/Sun/SunMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.02
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0.2, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "Sun_Ray_2" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 0.78539807)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.15
+                rel material:binding = </Root/Pivot/Sun/SunMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.02
+                float2 ui:nodegraph:node:pos = (-156.05641, 134.21555)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.92387956, 0, 0, 0.3826834)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (-0.14, 0.14, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "Sun_Ray_4" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 2.3561945)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.15
+                rel material:binding = </Root/Pivot/Sun/SunMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.02
+                float2 ui:nodegraph:node:pos = (-116.05641, 174.21555)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.3826834, 0, 0, 0.92387956)
+                float3 xformOp:scale = (0.9999998, 0.9999998, 0.9999998)
+                float3 xformOp:translate = (-0.14, -0.14, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "Sun_Ray_5" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 3.1415927)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.15
+                rel material:binding = </Root/Pivot/Sun/SunMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.02
+                float2 ui:nodegraph:node:pos = (-156.05641, 134.21555)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, -0.2, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "Sun_Ray_6" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 3.9269903)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.15
+                rel material:binding = </Root/Pivot/Sun/SunMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.02
+                float2 ui:nodegraph:node:pos = (-136.05641, 154.21555)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (-0.38268337, 0, 0, 0.92387956)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0.14, -0.14, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "Sun_Ray_7" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 4.7123885)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.15
+                rel material:binding = </Root/Pivot/Sun/SunMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.02
+                float2 ui:nodegraph:node:pos = (-116.05641, 174.21555)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+                float3 xformOp:scale = (0.9999998, 0.9999998, 0.9999998)
+                float3 xformOp:translate = (0.2, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "Sun_Ray_8" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, -0.78539807)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.15
+                rel material:binding = </Root/Pivot/Sun/SunMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.02
+                float2 ui:nodegraph:node:pos = (-96.05641, 194.21555)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.92387956, 0, 0, -0.3826834)
+                float3 xformOp:scale = (0.99999976, 0.99999976, 0.99999976)
+                float3 xformOp:translate = (0.14, 0.14, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "Sun_Ray_3" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 1.5707964)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.15
+                rel material:binding = </Root/Pivot/Sun/SunMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.02
+                float2 ui:nodegraph:node:pos = (-136.05641, 154.21555)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, 0, 0, 0.70710677)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (-0.2, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cube "Face" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (6.322025e-8, 1.7763568e-15, 0)
+                }
+            )
+            {
+                rel material:binding = </Root/Pivot/Sun/Face/FaceMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double size = 0.2
+                float2 ui:nodegraph:node:pos = (-156.05641, 134.21555)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (0.7, 0.7, 0.01)
+                float3 xformOp:translate = (1.1175871e-8, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Material "FaceMaterial"
+                {
+                    token outputs:mtlx:surface.connect = </Root/Pivot/Sun/Face/FaceMaterial/UnlitSurface.outputs:out>
+                    token outputs:realitykit:vertex
+                    token outputs:surface.connect = None
+                    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (216.23386, 112.55478)
+                    int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 121
+
+                    def Shader "DefaultSurfaceShader" (
+                        active = false
+                    )
+                    {
+                        uniform token info:id = "UsdPreviewSurface"
+                        color3f inputs:diffuseColor = (1, 1, 1)
+                        float inputs:roughness = 0.75
+                        token outputs:surface
+                    }
+
+                    def Shader "TextureCoordinates"
+                    {
+                        uniform token info:id = "ND_texcoord_vector2"
+                        float2 outputs:out
+                        float2 ui:nodegraph:node:pos = (-1047.7528, 119.75869)
+                        int ui:nodegraph:node:stackingOrder = 332
+                    }
+
+                    def Shader "Divide"
+                    {
+                        uniform token info:id = "ND_divide_vector2"
+                        float2 inputs:in1.connect = </Root/Pivot/Sun/Face/FaceMaterial/TextureCoordinates.outputs:out>
+                        float2 inputs:in2 = (1, 1)
+                        float2 outputs:out
+                        float2 ui:nodegraph:node:pos = (-837.3608, 128.44995)
+                        int ui:nodegraph:node:stackingOrder = 332
+                    }
+
+                    def Shader "Add"
+                    {
+                        uniform token info:id = "ND_add_vector2"
+                        float2 inputs:in1.connect = </Root/Pivot/Sun/Face/FaceMaterial/Divide.outputs:out>
+                        float2 inputs:in2 = (0, 0)
+                        float2 outputs:out
+                        float2 ui:nodegraph:node:pos = (-725.37427, 135.66129)
+                        int ui:nodegraph:node:stackingOrder = 332
+                    }
+
+                    def Shader "Texture"
+                    {
+                        uniform token info:id = "ND_image_color3"
+                        color3f inputs:default = (0, 0, 0) (
+                            colorSpace = "srgb_displayp3"
+                        )
+                        asset inputs:file = @../Textures/Smiley.png@
+                        string inputs:filtertype
+                        float2 inputs:texcoord.connect = </Root/Pivot/Sun/Face/FaceMaterial/Add.outputs:out>
+                        string inputs:uaddressmode
+                        string inputs:vaddressmode
+                        color3f outputs:out
+                        float2 ui:nodegraph:node:pos = (-485.4606, -10.874771)
+                        int ui:nodegraph:node:stackingOrder = 338
+                    }
+
+                    def Shader "UnlitSurface"
+                    {
+                        uniform token info:id = "ND_realitykit_unlit_surfaceshader"
+                        bool inputs:applyPostProcessToneMap = 0
+                        color3f inputs:color.connect = </Root/Pivot/Sun/Face/FaceMaterial/Texture.outputs:out>
+                        bool inputs:hasPremultipliedAlpha = 0
+                        float inputs:opacity = 1
+                        float inputs:opacity.connect = </Root/Pivot/Sun/Face/FaceMaterial/Opacity_Mask.outputs:out>
+                        token outputs:out
+                        float2 ui:nodegraph:node:pos = (-135.3813, 117.50011)
+                        int ui:nodegraph:node:stackingOrder = 161
+                    }
+
+                    def Shader "Opacity_Mask"
+                    {
+                        uniform token info:id = "ND_image_float"
+                        float inputs:default
+                        asset inputs:file = @../Textures/Opacity_Mask.png@
+                        string inputs:filtertype
+                        float2 inputs:texcoord.connect = </Root/Pivot/Sun/Face/FaceMaterial/Add.outputs:out>
+                        string inputs:uaddressmode
+                        string inputs:vaddressmode
+                        float outputs:out
+                        float2 ui:nodegraph:node:pos = (-485.4157, 453.586)
+                        int ui:nodegraph:node:stackingOrder = 176
+                    }
+                }
+
+                def RealityKitComponent "MeshSorting"
+                {
+                    rel group = </Root/Model_Sorting_Group>
+                    uniform token info:id = "RealityKit.MeshSorting"
+                    int priorityInGroup = 0
+                }
+            }
+        }
+
+        def Xform "DirectionalLight"
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "DirectionalLight"
+            {
+                float3 color = (0.97768164, 0.95748854, 0.30111828)
+                token info:id = "RealityKit.DirectionalLight"
+                float intensity = 2000
+
+                def RealityKitStruct "Shadow"
+                {
+                    bool isEnabled = 1
+                }
+            }
+        }
+    }
+
+    def RealityKitMeshSortingGroup "Model_Sorting_Group" (
+        active = true
+    )
+    {
+    }
+
+    def RealityKitComponent "Collider"
+    {
+        uint group = 1
+        uniform token info:id = "RealityKit.Collider"
+        uint mask = 4294967295
+        token type = "Default"
+
+        def RealityKitStruct "Shape"
+        {
+            float3 extent = (5.5, 5.5, 2)
+            float radius = 0.1
+            token shapeType = "Sphere"
+
+            def RealityKitStruct "pose"
+            {
+                float3 position = (-1.1920929e-7, 0, 0)
+            }
+        }
+    }
+
+    def RealityKitCustomComponent "RealityKitContent_TargetComponent"
+    {
+        uniform token info:id = "RealityKitContent.TargetComponent"
+    }
+
+    def RealityKitCustomComponent "RealityKitContent_HealthComponent"
+    {
+        uniform token info:id = "RealityKitContent.HealthComponent"
+    }
+
+    def RealityKitComponent "Billboard"
+    {
+        float blendFactor = 1
+        uniform token info:id = "RealityKit.Billboard"
+    }
+}
+

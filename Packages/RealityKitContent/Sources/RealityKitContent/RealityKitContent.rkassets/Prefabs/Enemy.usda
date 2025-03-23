@@ -1,0 +1,109 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (448.100.11)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+reorder rootPrims = ["Root", "Parent"]
+
+def Xform "Root"
+{
+    reorder nameChildren = ["Pivot", "RealityKitContent_HealthComponent", "RealityKitContent_WeaponComponent", "Transform", "Collider", "InputTarget", "AudioLibrary", "PlaneFlying_wav", "SpatialAudio", "RealityKitContent_EnemyComponent"]
+    def Xform "Pivot" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, 0, 0)
+        }
+    )
+    {
+        reorder nameChildren = ["toy_biplane_idle", "Particles"]
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def "toy_biplane_idle" (
+            active = true
+            references = @../Models/toy_biplane_idle.usdz@
+        )
+        {
+            reorder nameChildren = ["toy_biplane_rig", "Looks", "Particles"]
+            float3 xformOp:scale = (0.005, 0.005, 0.005)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "Looks"
+            {
+                over "rig_skin_pxrusdpreviewsurface1sg"
+                {
+                    token outputs:mtlx:surface
+                    token outputs:realitykit:vertex
+                }
+            }
+        }
+    }
+
+    def RealityKitCustomComponent "RealityKitContent_WeaponComponent"
+    {
+        float damage = 5
+        float fireRate = 2
+        uniform token info:id = "RealityKitContent.WeaponComponent"
+        float lastShotTime = 0
+    }
+
+    def RealityKitComponent "Collider"
+    {
+        uint group = 1
+        uniform token info:id = "RealityKit.Collider"
+        uint mask = 4294967295
+        token type = "Default"
+
+        def RealityKitStruct "Shape"
+        {
+            float3 extent = (0.12710907, 0.054743063, 0.118360616)
+            token shapeType = "Box"
+
+            def RealityKitStruct "pose"
+            {
+                float3 position = (-0.00020383298, 0.027379943, -0.0005319491)
+            }
+        }
+    }
+
+    def RealityKitComponent "InputTarget"
+    {
+        uniform token info:id = "RealityKit.InputTarget"
+    }
+
+    def RealityKitComponent "AudioLibrary"
+    {
+        uniform token info:id = "RealityKit.AudioLibrary"
+
+        def RealityKitDict "resources"
+        {
+            string[] keys = ["PlaneFlying.wav"]
+            rel values = </Root/PlaneFlying_wav>
+        }
+    }
+
+    def RealityKitAudioFile "PlaneFlying_wav"
+    {
+        uniform asset file = @../Sounds/PlaneFlying.wav@
+        uniform bool shouldLoop = 1
+    }
+
+    def RealityKitComponent "SpatialAudio"
+    {
+        float gain = -15
+        uniform token info:id = "RealityKit.SpatialAudio"
+    }
+
+    def RealityKitCustomComponent "RealityKitContent_EnemyComponent"
+    {
+        uniform token info:id = "RealityKitContent.EnemyComponent"
+    }
+}
+
