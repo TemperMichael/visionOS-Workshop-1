@@ -325,14 +325,14 @@ def Xform "Root"
                         color3f inputs:default = (0, 0, 0) (
                             colorSpace = "srgb_displayp3"
                         )
-                        asset inputs:file = @../Textures/Smiley.png@
+                        asset inputs:file = @../Textures/Target.png@
                         string inputs:filtertype
                         float2 inputs:texcoord.connect = </Root/Pivot/Sun/Face/FaceMaterial/Add.outputs:out>
                         string inputs:uaddressmode
                         string inputs:vaddressmode
                         color3f outputs:out
-                        float2 ui:nodegraph:node:pos = (-485.4606, -10.874771)
-                        int ui:nodegraph:node:stackingOrder = 338
+                        float2 ui:nodegraph:node:pos = (-499.08853, 31.86271)
+                        int ui:nodegraph:node:stackingOrder = 334
                     }
 
                     def Shader "UnlitSurface"
