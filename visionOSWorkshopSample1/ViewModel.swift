@@ -30,7 +30,7 @@ class ViewModel {
     
     // TODO: Task 2, Step 1 - Load entity from Reality Composer Pro
     func loadScene() async -> Entity? {
-        return nil
+        return try? await Entity(named: "GameScene", in: realityKitContentBundle)
     }
     
     func startGame() {

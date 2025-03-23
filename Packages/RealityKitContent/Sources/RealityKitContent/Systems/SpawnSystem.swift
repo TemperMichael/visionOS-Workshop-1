@@ -45,7 +45,7 @@ public struct SpawnSystem: System {
     
     // TODO: Task 2, Step 2 - Load entity from Reality Composer Pro
     private func loadEntity() async -> Entity? {
-        return nil
+        return try? await Entity(named: "Prefabs/Enemy", in: realityKitContentBundle)
     }
     
     private func spawnEntity(in parent: Entity) {
