@@ -35,6 +35,7 @@ struct GameView: View {
             .onEnded { event in
                 guard viewModel.appState == .playing else { return }
                 // TODO: Task 3, Step 6 - Reduce health of enemy by 50 when it gets tapped
+                event.entity.components[HealthComponent.self]?.health -= 50
             }
         )
     }
@@ -53,6 +54,13 @@ struct GameView: View {
             guard let healthComponent = event.entity.components[HealthComponent.self] else { return }
             // TODO: Task 3, Step 7 - Stop game when target health is zero
             // TODO: Task 3, Step 8 - Increase score by 10 when enemy health is zero
+            if healthComponent.health == 0  {
+                if event.entity.components.has(TargetComponent.self) {
+                    viewModel.stopGame()
+                } else if event.entity.components.has(EnemyComponent.self) {
+                    viewModel.score += 10
+                }
+            }
         }))
         
         subscriptions.append(content.subscribe(to: CollisionEvents.Began.self) { collisionEvent in
@@ -60,6 +68,8 @@ struct GameView: View {
                let bulletComponent = collisionEvent.entityB.components[BulletComponent.self] {
                 // TODO: Task 3, Step 1 - Decrease health of target when bullet collides with it
                 // TODO: Task 3, Step 2 - Remove bullet on collision
+                collisionEvent.entityA.components[HealthComponent.self]?.health -= bulletComponent.damage
+                collisionEvent.entityB.removeFromParent()
             }
         })
     }

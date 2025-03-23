@@ -66,6 +66,26 @@ public struct HealthSystem: System {
         component: inout HealthComponent,
         runtimeComponent: inout HealthRuntimeComponent
     ) {
-
+        if runtimeComponent.healthBarEntity.scale.x > 0 {
+            runtimeComponent.healthBarEntity.scale.x = component.health * 0.01
+            
+            if runtimeComponent.healthBarEntity.scale.x <= 0 {
+                runtimeComponent.healthBarEntity.scale.x = 0
+                
+                let container = Entity()
+                entity.parent?.addChild(container)
+                container.setPosition(entity.position(relativeTo: nil), relativeTo: nil)
+                if let root = entity.scene?.findEntity(named: "Root") {
+                    container.scale *= (1 / entity.scale(relativeTo: nil)) * root.scale
+                }
+                
+                var particleEffect = ParticleEmitterComponent.Presets.impact
+                particleEffect.timing = .once(warmUp: nil, emit: .init(duration: 0.1))
+                particleEffect.particlesInheritTransform = true
+                container.components[ParticleEmitterComponent.self] = particleEffect
+                
+                entity.removeFromParent()
+            }
+        }
     }
 }

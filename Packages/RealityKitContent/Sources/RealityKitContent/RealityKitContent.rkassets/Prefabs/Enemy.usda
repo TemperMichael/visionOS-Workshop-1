@@ -142,6 +142,13 @@ def Xform "Root"
         }
     }
 
+    def RealityKitCustomComponent "RealityKitContent_HealthComponent"
+    {
+        float health = 100
+        float healthBarOffset = 0.1
+        uniform token info:id = "RealityKitContent.HealthComponent"
+    }
+
     def RealityKitCustomComponent "RealityKitContent_WeaponComponent"
     {
         float damage = 5
