@@ -27,7 +27,7 @@ struct GameView: View {
             
             // TODO: Task 4, Step 1 - Remove automatic game start
             // Should be commented out in final solution
-             viewModel.startGame()
+            // viewModel.startGame()
             
             content.add(viewModel.root)
         }
